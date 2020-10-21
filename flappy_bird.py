@@ -53,4 +53,5 @@ class Bird:
         else:
             if self.tilt > - 90:
                 self.tilt -= self.ROT_VEL
+                
 
