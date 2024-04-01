@@ -7,6 +7,7 @@ import random
 
 WIN_WIDTH = 500
 WIN_HEIGHT = 800
+max_score = 0
 
 GEN = 0
 
@@ -17,7 +18,7 @@ PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "pipe
 BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "base.png"))) 
 BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bg.png")))
 pygame.font.init()
-STAT_FONT = pygame.font.SysFont("comicsans", 50)
+STAT_FONT = pygame.font.SysFont("helvetica", 35)
 
 class Bird:
     IMGS = BIRD_IMAGES
@@ -161,6 +162,9 @@ class Base:
 
 
 def draw_window(win, birds, pipes, base, score, gen, num_birds):
+    global max_score
+    if score > max_score:
+        max_score = score
     win.blit(BG_IMG, (0,0))
     
     for pipe in pipes:
@@ -168,11 +172,13 @@ def draw_window(win, birds, pipes, base, score, gen, num_birds):
 
     text =  STAT_FONT.render("Score: " + str(score), 1, (255, 255, 255))
     win.blit(text, (WIN_WIDTH - 10 - text.get_width(), 10))
+    text =  STAT_FONT.render("Max score: " + str(max_score), 1, (255, 255, 255))
+    win.blit(text, (WIN_WIDTH - 10 - text.get_width(), 50))
  
     text =  STAT_FONT.render("Gen: " + str(gen), 1, (255, 255, 255))
     win.blit(text, (10, 10))
     text =  STAT_FONT.render("Num birds: " + str(num_birds), 1, (255, 255, 255))
-    win.blit(text, (10, 45))
+    win.blit(text, (10, 50))
 
     base.draw(win)
     for bird in birds:
